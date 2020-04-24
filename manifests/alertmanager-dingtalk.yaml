@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: prometheus-webhook-dingtalk
+  name: prometheus-webhook-dingtalk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus-webhook-dingtalk
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: prometheus-webhook-dingtalk
+    spec:
+      containers:
+      - image: timonwong/prometheus-webhook-dingtalk
+        name: prometheus-webhook-dingtalk
+        command: ["/bin/prometheus-webhook-dingtalk","--web.listen-address=:8060","--ding.profile=yunwei=https://oapi.dingtalk.com/robot/send?access_token=88878b35f5ddede8d0652dd01387c1f10fcaf71a8b17dc1f52bb63cb02f6f14f"]
+        ports:
+        - containerPort: 8060
+          name: http
+        resources:
+          limits:
+            cpu: 100m
+            memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 50Mi
